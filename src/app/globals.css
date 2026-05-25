@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: transparent;
+  color: #f8fafc;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: transparent;
+  color: #f8fafc;
+  font-family: inherit;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+
+.holo-scanline {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 100% 6px;
+}
+
+@keyframes holoPulse {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.32;
+  }
+}
+
+@keyframes holoDrift {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(251, 146, 60, 0.25);
+  color: #fff;
+}
+
+::marker {
+  color: #fbbf24;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+html.light body {
+  background: #f5f2ee;
+  color: #111827;
+}
+
+html.light .bg-slate-950\/70,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-950\/95,
+html.light .bg-slate-950\/75,
+html.light .bg-slate-950 {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  color: #111827;
+}

@@ -1,0 +1,295 @@
+/* ============================================================
+   AURORA BOREALIS – Vertical beam Northern Lights
+   Beams rise from the bottom upward, narrow and tall
+   ============================================================ */
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #010810;
+  pointer-events: none;
+}
+
+/* ── Stars ─────────────────────────────────────────────── */
+.aurora-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at  6%  5%,  rgba(255,255,255,0.95) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15%  9%,  rgba(255,255,255,0.80) 0%, transparent 100%),
+    radial-gradient(1px 1px at 24%  3%,  rgba(255,255,255,0.90) 0%, transparent 100%),
+    radial-gradient(1px 1px at 33%  7%,  rgba(255,255,255,0.70) 0%, transparent 100%),
+    radial-gradient(1px 1px at 41%  2%,  rgba(255,255,255,0.85) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50%  6%,  rgba(255,255,255,0.90) 0%, transparent 100%),
+    radial-gradient(1px 1px at 59%  4%,  rgba(255,255,255,0.75) 0%, transparent 100%),
+    radial-gradient(1px 1px at 67%  8%,  rgba(255,255,255,0.85) 0%, transparent 100%),
+    radial-gradient(1px 1px at 76%  3%,  rgba(255,255,255,0.70) 0%, transparent 100%),
+    radial-gradient(1px 1px at 84%  7%,  rgba(255,255,255,0.80) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92%  2%,  rgba(255,255,255,0.90) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 15%,  rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 20% 18%,  rgba(255,255,255,0.65) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 12%,  rgba(255,255,255,0.50) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 16%,  rgba(255,255,255,0.70) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 11%,  rgba(255,255,255,0.60) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 14%,  rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 19%,  rgba(255,255,255,0.65) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 13%,  rgba(255,255,255,0.50) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at  3% 25%, rgba(255,255,255,0.40) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 17% 22%, rgba(255,255,255,0.50) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 38% 28%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 62% 24%, rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 78% 27%, rgba(255,255,255,0.40) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 95% 21%, rgba(255,255,255,0.50) 0%, transparent 100%);
+  animation: starTwinkle 7s ease-in-out infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0%   { opacity: 0.65; }
+  50%  { opacity: 1.00; }
+  100% { opacity: 0.70; }
+}
+
+/* ── Sky gradient base ──────────────────────────────────── */
+.aurora-sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    #010810 0%,
+    #020e18 35%,
+    #021420 65%,
+    #050a0f 100%
+  );
+}
+
+/* ── Horizon bottom glow (ground mist / magenta base) ──── */
+.aurora-horizon {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  right: -10%;
+  height: 28%;
+  background: linear-gradient(
+    to top,
+    rgba(180, 10, 220, 0.45)  0%,
+    rgba(120,  0, 200, 0.20) 40%,
+    transparent              100%
+  );
+  filter: blur(40px);
+}
+
+/* ── VERTICAL BEAM base styles ──────────────────────────── */
+/* Each beam is a tall, narrow column anchored at the bottom */
+.aurora-beam {
+  position: absolute;
+  bottom: 0;
+  transform-origin: bottom center;
+  /* Narrow & tall — like real aurora curtains */
+  border-radius: 60% 60% 0 0 / 8% 8% 0 0;
+}
+
+/* ─── Beam 1 — Bright neon green (center) ─────────────── */
+.aurora-beam-1 {
+  left:    48%;
+  width:   6%;
+  height:  88vh;
+  background: linear-gradient(
+    to top,
+    rgba(0, 255, 70,  1.00) 0%,
+    rgba(0, 230, 90,  0.80) 30%,
+    rgba(0, 200, 120, 0.40) 65%,
+    rgba(0, 160, 100, 0.10) 85%,
+    transparent             100%
+  );
+  filter: blur(12px);
+  animation: vBeam1 11s ease-in-out infinite;
+}
+
+/* ─── Beam 2 — Wide green curtain (center-left) ───────── */
+.aurora-beam-2 {
+  left:    38%;
+  width:   14%;
+  height:  78vh;
+  background: linear-gradient(
+    to top,
+    rgba(30, 255, 60,  0.90) 0%,
+    rgba(20, 230, 80,  0.65) 35%,
+    rgba(10, 180, 100, 0.30) 65%,
+    transparent              100%
+  );
+  filter: blur(18px);
+  animation: vBeam2 15s ease-in-out infinite;
+}
+
+/* ─── Beam 3 — Slim green spike (right-center) ─────────── */
+.aurora-beam-3 {
+  left:    58%;
+  width:   5%;
+  height:  95vh;
+  background: linear-gradient(
+    to top,
+    rgba(50, 255, 80,  0.95) 0%,
+    rgba(30, 220, 100, 0.70) 30%,
+    rgba(10, 180, 120, 0.35) 60%,
+    transparent              100%
+  );
+  filter: blur(10px);
+  animation: vBeam3 13s ease-in-out infinite;
+}
+
+/* ─── Beam 4 — Cyan beam (right) ───────────────────────── */
+.aurora-beam-4 {
+  left:    68%;
+  width:   8%;
+  height:  82vh;
+  background: linear-gradient(
+    to top,
+    rgba(0, 220, 255, 0.85) 0%,
+    rgba(0, 190, 240, 0.60) 35%,
+    rgba(0, 160, 220, 0.25) 65%,
+    transparent             100%
+  );
+  filter: blur(14px);
+  animation: vBeam4 17s ease-in-out infinite;
+}
+
+/* ─── Beam 5 — Wide cyan spread (far right) ─────────────── */
+.aurora-beam-5 {
+  left:    74%;
+  width:   18%;
+  height:  70vh;
+  background: linear-gradient(
+    to top,
+    rgba(0, 200, 255, 0.70) 0%,
+    rgba(0, 160, 230, 0.45) 40%,
+    transparent             100%
+  );
+  filter: blur(22px);
+  animation: vBeam5 19s ease-in-out infinite;
+}
+
+/* ─── Beam 6 — Cyan/teal (left-center) ──────────────────── */
+.aurora-beam-6 {
+  left:    28%;
+  width:   7%;
+  height:  75vh;
+  background: linear-gradient(
+    to top,
+    rgba(0, 210, 240, 0.75) 0%,
+    rgba(0, 180, 220, 0.50) 40%,
+    rgba(0, 150, 200, 0.20) 70%,
+    transparent             100%
+  );
+  filter: blur(13px);
+  animation: vBeam6 14s ease-in-out infinite;
+}
+
+/* ─── Beam 7 — Magenta (far right edge) ────────────────── */
+.aurora-beam-7 {
+  left:    85%;
+  width:   10%;
+  height:  80vh;
+  background: linear-gradient(
+    to top,
+    rgba(255, 30, 200, 0.70)  0%,
+    rgba(220,  0, 180, 0.45) 40%,
+    rgba(180,  0, 160, 0.15) 70%,
+    transparent              100%
+  );
+  filter: blur(16px);
+  animation: vBeam7 20s ease-in-out infinite;
+}
+
+/* ─── Beam 8 — Purple/indigo (far left) ─────────────────── */
+.aurora-beam-8 {
+  left:    6%;
+  width:   9%;
+  height:  72vh;
+  background: linear-gradient(
+    to top,
+    rgba(140,  0, 255, 0.65) 0%,
+    rgba(100,  0, 220, 0.40) 40%,
+    rgba( 60,  0, 180, 0.15) 70%,
+    transparent              100%
+  );
+  filter: blur(15px);
+  animation: vBeam8 16s ease-in-out infinite;
+}
+
+/* ─── Beam 9 — Magenta/purple left-center ───────────────── */
+.aurora-beam-9 {
+  left:    18%;
+  width:   6%;
+  height:  68vh;
+  background: linear-gradient(
+    to top,
+    rgba(200, 20, 255, 0.60) 0%,
+    rgba(160,  0, 220, 0.35) 45%,
+    transparent              100%
+  );
+  filter: blur(12px);
+  animation: vBeam9 18s ease-in-out infinite;
+}
+
+/* ── Keyframes: slight sway + breathe ───────────────────── */
+@keyframes vBeam1 {
+  0%,100% { transform: scaleY(1.00) skewX( 1.5deg); opacity: 0.95; }
+  33%     { transform: scaleY(1.08) skewX(-2.0deg); opacity: 1.00; }
+  66%     { transform: scaleY(0.94) skewX( 2.5deg); opacity: 0.88; }
+}
+@keyframes vBeam2 {
+  0%,100% { transform: scaleY(0.95) skewX(-2.0deg); opacity: 0.80; }
+  40%     { transform: scaleY(1.10) skewX( 1.5deg); opacity: 0.95; }
+  70%     { transform: scaleY(1.00) skewX(-1.0deg); opacity: 0.85; }
+}
+@keyframes vBeam3 {
+  0%,100% { transform: scaleY(1.00) skewX( 2.0deg); opacity: 0.90; }
+  50%     { transform: scaleY(1.12) skewX(-2.5deg); opacity: 1.00; }
+}
+@keyframes vBeam4 {
+  0%,100% { transform: scaleY(0.92) skewX(-2.5deg); opacity: 0.80; }
+  45%     { transform: scaleY(1.08) skewX( 2.0deg); opacity: 0.95; }
+}
+@keyframes vBeam5 {
+  0%,100% { transform: scaleY(1.00) skewX( 1.0deg); opacity: 0.70; }
+  55%     { transform: scaleY(1.06) skewX(-2.0deg); opacity: 0.85; }
+}
+@keyframes vBeam6 {
+  0%,100% { transform: scaleY(0.96) skewX(-1.5deg); opacity: 0.75; }
+  50%     { transform: scaleY(1.10) skewX( 3.0deg); opacity: 0.90; }
+}
+@keyframes vBeam7 {
+  0%,100% { transform: scaleY(1.00) skewX( 2.0deg); opacity: 0.65; }
+  55%     { transform: scaleY(1.07) skewX(-2.5deg); opacity: 0.80; }
+}
+@keyframes vBeam8 {
+  0%,100% { transform: scaleY(0.93) skewX(-2.0deg); opacity: 0.60; }
+  50%     { transform: scaleY(1.08) skewX( 2.5deg); opacity: 0.75; }
+}
+@keyframes vBeam9 {
+  0%,100% { transform: scaleY(1.00) skewX( 1.5deg); opacity: 0.58; }
+  45%     { transform: scaleY(1.05) skewX(-2.0deg); opacity: 0.72; }
+}
+
+/* ── Overall shimmer pass (left→right glow sweep) ──────── */
+.aurora-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent               0%,
+    rgba(  0, 255, 100, 0.04) 20%,
+    rgba(  0, 200, 255, 0.05) 40%,
+    rgba(180,   0, 255, 0.03) 60%,
+    transparent               80%
+  );
+  background-size: 200% 100%;
+  animation: auroraShimmer 10s linear infinite;
+}
+
+@keyframes auroraShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position:   0% 0; }
+}

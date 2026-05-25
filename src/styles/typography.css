@@ -1,0 +1,13 @@
+:root {
+  color-scheme: dark;
+}
+
+.h1,
+.h2,
+.h3 {
+  letter-spacing: 0.02em;
+}
+
+.prose {
+  line-height: 1.8;
+}

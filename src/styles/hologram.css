@@ -1,0 +1,150 @@
+/* Sci-Fi Hologram Effects */
+
+/* Hologram glow text animation */
+@keyframes hologram-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(0, 255, 150, 0.3), 0 0 20px rgba(0, 255, 150, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(0, 255, 150, 0.6), 0 0 30px rgba(0, 255, 150, 0.3);
+  }
+}
+
+/* Hologram scanline effect */
+@keyframes scanlines {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+/* Hologram flicker */
+@keyframes hologram-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.8;
+  }
+}
+
+/* Cyber grid background */
+@keyframes cyber-grid {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100px;
+  }
+}
+
+/* Hologram border glow */
+@keyframes border-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.2), inset 0 0 10px rgba(0, 255, 200, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 200, 0.6), inset 0 0 20px rgba(0, 255, 200, 0.1);
+  }
+}
+
+/* Glitch effect */
+@keyframes glitch {
+  0% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(-2px, -2px);
+  }
+  20% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(2px, 2px);
+  }
+  40% {
+    clip-path: inset(43% 0 1% 0);
+    transform: translate(-2px, 2px);
+  }
+  60% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(2px, -2px);
+  }
+  80% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(-2px, -2px);
+  }
+  100% {
+    clip-path: inset(58% 0 43% 0);
+    transform: translate(2px, 2px);
+  }
+}
+
+/* Hologram classes */
+.hologram-text {
+  animation: hologram-pulse 3s ease-in-out infinite;
+}
+
+.hologram-box {
+  animation: border-glow 2s ease-in-out infinite;
+}
+
+.hologram-flicker {
+  animation: hologram-flicker 0.15s infinite;
+}
+
+.cyber-grid {
+  animation: cyber-grid 30s linear infinite;
+}
+
+.glitch-effect {
+  animation: glitch 0.5s ease-in-out;
+}
+
+/* Hologram hover states */
+.hologram-interactive:hover {
+  filter: brightness(1.2) drop-shadow(0 0 20px rgba(0, 255, 200, 0.8));
+}
+
+/* Terminal scanlines effect */
+.scanlines::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 150, 0.03),
+    rgba(0, 255, 150, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  animation: scanlines 8s linear infinite;
+}
+
+/* Hologram focus states for inputs */
+.hologram-input:focus {
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.3),
+    inset 0 0 10px rgba(0, 255, 200, 0.1),
+    0 0 40px rgba(0, 255, 150, 0.1);
+}
+
+/* Hologram gradient text */
+.hologram-gradient {
+  background: linear-gradient(90deg, #00ffb3, #00ffff, #00ffb3);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
