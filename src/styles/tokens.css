@@ -1,0 +1,41 @@
+@theme {
+  --color-void: #05070b;
+  --color-base: #080b11;
+  --color-surface: #0d1219;
+  --color-raised: #131a23;
+  --color-line: #1e2733;
+  --color-line-strong: #2b3644;
+
+  --color-fg: #e9eef5;
+  --color-fg-muted: #97a3b4;
+  --color-fg-subtle: #6d798a;
+
+  --color-accent: #7c9cff;
+  --color-accent-bright: #a5b9ff;
+  --color-accent-deep: #4a67d6;
+
+  --color-signal-positive: #46c79a;
+  --color-signal-caution: #d9a441;
+  --color-signal-critical: #e0645a;
+
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-code), ui-monospace, SFMono-Regular, monospace;
+
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.22em;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --spacing-gutter: 1.5rem;
+  --spacing-section: 7.5rem;
+}
+
+:root {
+  --shell-max: 76rem;
+  --header-h: 4.25rem;
+  --grid-line: rgba(255, 255, 255, 0.028);
+  --glow-accent: 124 156 255;
+  --scroll-progress: 0;
+}

@@ -1,25 +1,29 @@
+export type ResumeSection = {
+  title: string;
+  items: string[];
+};
+
 export const resume = {
-  headline: "AI/ML Engineer Resume",
+  headline: "Resume",
   summary:
-    "A refined, ATS-friendly resume overview for AI engineering and data analytics roles.",
+    "A structured view of the same material as the PDF: education, focus areas, and the technical ground I work on.",
+  available: false,
+  downloadUrl: "/resume.pdf",
+  updated: null as string | null,
   sections: [
-    {
-      title: "Professional Profile",
-      items: [
-        "Focused on machine learning system design, analytics storytelling, and production-ready engineering.",
-        "Skilled at translating complex data into premium product narratives.",
-      ],
-    },
     {
       title: "Education",
       items: [
-        "B.Tech in Computer Science and Engineering — KIET Group of Institutions",
+        "B.Tech, Computer Science and Engineering — KIET Group of Institutions (2024 — Present)",
       ],
     },
     {
-      title: "Core Skills",
-      items: ["Python, AI/ML, Data Analytics, DSA, Model Validation, Research Communication"],
+      title: "Focus areas",
+      items: ["Machine learning", "AI engineering", "Data analytics"],
     },
-  ],
-  downloadUrl: "/resume.pdf",
+    {
+      title: "Seeking",
+      items: ["Internship", "Placement opportunities", "AI-driven product roles"],
+    },
+  ] satisfies ResumeSection[],
 };

@@ -1,29 +1,47 @@
+export type ContactChannel = {
+  label: string;
+  value: string | null;
+  href: string | null;
+  verified: boolean;
+};
+
 export const profile = {
   name: "Mayank Swaroop Nandan",
-  role: "AI/ML Engineer | Data Analytics Enthusiast",
+  role: "AI/ML Engineer",
+  roleLong: "AI/ML Engineer & Data Analytics",
+  positioning: "I build machine learning systems and the data pipelines that make them work.",
   introduction:
-    "Hi, I am Mayank Swaroop Nandan. I am currently pursuing B.Tech from KIET Group of Institutions. I am focused on Machine Learning, AI Engineering, and Data Analytics.",
-  hero: {
-    lead: "Architecture-led AI product design for enterprise impact.",
-    statement: "Building premium machine learning systems with the precision of luxury studio architecture.",
-    accent: "Cinematic data experiences. Elegant model storytelling. Intelligent systems with timeless clarity.",
-  },
+    "I am an undergraduate engineer at KIET Group of Institutions focused on machine learning, AI engineering, and data analytics. I work across the full path a model takes to production: preparing data, training and evaluating models, and building the interfaces that make their output usable.",
+  focusAreas: [
+    { label: "Machine learning", detail: "Model training, evaluation, and iteration" },
+    { label: "AI engineering", detail: "Turning models into systems people can use" },
+    { label: "Data analytics", detail: "Making measurement drive the decision" },
+  ],
+  availability: "Open to internships, placement opportunities, and AI-driven product roles.",
+  goals: ["Internship", "Placement opportunities", "AI-driven product roles"],
   education: [
     {
       institution: "KIET Group of Institutions",
-      program: "B.Tech in Computer Science and Engineering",
-      year: "2024 - Present",
+      program: "B.Tech, Computer Science and Engineering",
+      period: "2024 — Present",
+      status: "In progress",
     },
   ],
-  goals: ["Internship", "Placement opportunities", "AI-driven product roles"],
   contact: {
-    email: "mayank@example.com",
-    linkedin: "https://www.linkedin.com/in/mayank-swaroop-nandan",
-    github: "https://github.com/mayank-swaroop-nandan",
+    channels: [
+      { label: "Email", value: null, href: null, verified: false },
+      {
+        label: "GitHub",
+        value: "github.com/mayank-swaroop-nandan",
+        href: "https://github.com/mayank-swaroop-nandan",
+        verified: false,
+      },
+      {
+        label: "LinkedIn",
+        value: "linkedin.com/in/mayank-swaroop-nandan",
+        href: "https://www.linkedin.com/in/mayank-swaroop-nandan",
+        verified: false,
+      },
+    ] satisfies ContactChannel[],
   },
-  overview: [
-    "I design data workflows and machine learning systems with a luxury editorial mindset.",
-    "My work is defined by clarity, structure, and cinematic presentation across AI and analytics.",
-    "I bring premium engineering discipline to every dataset, model, and product narrative.",
-  ],
 };

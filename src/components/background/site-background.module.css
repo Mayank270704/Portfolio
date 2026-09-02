@@ -1,0 +1,87 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-void);
+  contain: strict;
+}
+
+.field {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(124, 156, 255, 0.09), transparent 62%),
+    radial-gradient(90% 55% at 50% 100%, rgba(70, 199, 154, 0.05), transparent 65%);
+}
+
+.band {
+  position: absolute;
+  left: 50%;
+  bottom: -18vh;
+  height: 78vh;
+  border-radius: 50% 50% 42% 42% / 26% 26% 8% 8%;
+  filter: blur(70px);
+  opacity: 0.62;
+  will-change: transform;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.bandOne {
+  width: min(46rem, 78vw);
+  margin-left: -14vw;
+  background: linear-gradient(to top, rgba(124, 156, 255, 0.5), rgba(124, 156, 255, 0) 78%);
+  animation: drift-a 26s ease-in-out infinite;
+}
+
+.bandTwo {
+  width: min(34rem, 62vw);
+  margin-left: 10vw;
+  background: linear-gradient(to top, rgba(157, 124, 255, 0.36), rgba(157, 124, 255, 0) 76%);
+  animation: drift-b 34s ease-in-out infinite;
+}
+
+.bandThree {
+  width: min(28rem, 54vw);
+  margin-left: 26vw;
+  background: linear-gradient(to top, rgba(43, 184, 163, 0.26), rgba(43, 184, 163, 0) 74%);
+  animation: drift-c 42s ease-in-out infinite;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(120% 90% at 50% 8%, #000 12%, transparent 78%);
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 100% at 50% 40%, transparent 42%, rgba(5, 7, 11, 0.72) 100%);
+}
+
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
+  50% { transform: translate3d(-46%, -3vh, 0) scaleY(1.08); }
+}
+
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(-50%, -2vh, 0) scaleY(1.04); }
+  50% { transform: translate3d(-55%, 1vh, 0) scaleY(0.94); }
+}
+
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(-50%, 1vh, 0) scaleY(0.96); }
+  50% { transform: translate3d(-44%, -2vh, 0) scaleY(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band {
+    animation: none;
+  }
+}

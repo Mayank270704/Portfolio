@@ -1,60 +1,67 @@
-"use client";
-
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type ButtonVariant = "primary" | "ghost" | "accent";
-
+type ButtonVariant = "primary" | "outline" | "quiet";
 type ButtonSize = "sm" | "md" | "lg";
 
+interface BaseProps {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+  children: React.ReactNode;
+}
+
 type ButtonProps =
-  | ({ href: string } & {
-      variant?: ButtonVariant;
-      size?: ButtonSize;
-      className?: string;
-      children: React.ReactNode;
-    } & React.AnchorHTMLAttributes<HTMLAnchorElement>)
-  | ({ href?: undefined } & {
-      variant?: ButtonVariant;
-      size?: ButtonSize;
-      className?: string;
-      children: React.ReactNode;
-    } & React.ButtonHTMLAttributes<HTMLButtonElement>);
+  | (BaseProps & { href: string; external?: boolean } & React.AnchorHTMLAttributes<HTMLAnchorElement>)
+  | (BaseProps & { href?: undefined; external?: never } & React.ButtonHTMLAttributes<HTMLButtonElement>);
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-white text-slate-950 shadow-[0_20px_70px_rgba(255,255,255,0.14)] hover:bg-white/90",
-  accent:
-    "bg-gradient-to-r from-orange-400 to-amber-500 text-slate-950 shadow-[0_20px_70px_rgba(251,146,60,0.18)] hover:brightness-110",
-  ghost:
-    "border border-white/15 bg-white/5 text-white hover:bg-white/10",
+    "bg-accent text-void hover:bg-accent-bright shadow-[0_0_0_1px_rgba(124,156,255,0.35),0_18px_40px_-18px_rgba(124,156,255,0.9)]",
+  outline: "border border-line-strong bg-surface/60 text-fg hover:border-accent/60 hover:bg-raised",
+  quiet: "text-fg-muted hover:text-fg",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-6 py-3 text-base",
-  lg: "px-8 py-4 text-lg",
+  sm: "h-9 px-4 text-[0.8125rem]",
+  md: "h-11 px-5 text-sm",
+  lg: "h-13 px-7 text-[0.9375rem]",
 };
 
-export function Button({ href, variant = "primary", size = "md", className, children, ...props }: ButtonProps) {
+export function Button({ variant = "primary", size = "md", className, children, ...rest }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center rounded-full font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300/70",
+    "inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-colors duration-300 disabled:pointer-events-none disabled:opacity-45",
     variantClasses[variant],
     sizeClasses[size],
     className,
   );
 
-  if (href) {
+  if (rest.href !== undefined) {
+    const { href, external, ...anchorProps } = rest as BaseProps & {
+      href: string;
+      external?: boolean;
+    } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+    if (external) {
+      return (
+        <a href={href} className={classes} target="_blank" rel="noopener noreferrer" {...anchorProps}>
+          {children}
+        </a>
+      );
+    }
+
     return (
-      <Link href={href} className={classes} {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <Link href={href} className={classes} {...anchorProps}>
         {children}
       </Link>
     );
   }
 
+  const { ...buttonProps } = rest as BaseProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
+
   return (
-    <button className={classes} type="button" {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <button type="button" className={classes} {...buttonProps}>
       {children}
     </button>
   );
