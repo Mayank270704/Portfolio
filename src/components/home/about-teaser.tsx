@@ -27,11 +27,18 @@ export function AboutTeaser() {
         <div data-reveal className="rule" />
 
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-          <p data-reveal className="measure text-base leading-relaxed text-fg-muted sm:text-lg">
-            {profile.introduction}
-          </p>
-
           <div className="flex flex-col gap-8">
+            <p data-reveal className="measure text-base leading-relaxed text-fg-muted sm:text-lg">
+              {profile.introduction}
+            </p>
+            <div data-reveal>
+              <Button href="/about" variant="outline">
+                More about me
+              </Button>
+            </div>
+          </div>
+
+          <div>
             <ul className="flex flex-col gap-5">
               {profile.focusAreas.map((area, index) => (
                 <li key={area.label} data-reveal className="flex gap-5">
@@ -47,12 +54,6 @@ export function AboutTeaser() {
                 </li>
               ))}
             </ul>
-
-            <div data-reveal>
-              <Button href="/about" variant="outline">
-                More about me
-              </Button>
-            </div>
           </div>
         </div>
       </Reveal>

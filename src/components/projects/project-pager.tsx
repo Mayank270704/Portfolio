@@ -22,7 +22,9 @@ function Pager({
       <span className="font-display text-lg font-semibold tracking-tight text-fg transition-colors group-hover:text-accent sm:text-xl">
         {project.title}
       </span>
-      <span className="text-sm leading-relaxed text-fg-muted">{project.shortDescription}</span>
+      {project.shortDescription ? (
+        <span className="text-sm leading-relaxed text-fg-muted">{project.shortDescription}</span>
+      ) : null}
     </Link>
   );
 }

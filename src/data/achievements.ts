@@ -17,4 +17,16 @@ export type Achievement = {
   url: string | null;
 };
 
-export const achievements: Achievement[] = [];
+/** From the resume's Achievements section. */
+export const achievements: Achievement[] = [
+  {
+    id: "leetcode-100",
+    title: "100+ DSA problems solved on LeetCode",
+    organisation: "LeetCode",
+    date: null,
+    summary:
+      "Sustained practice across data structures and algorithms, kept up alongside project work.",
+    kind: "milestone",
+    url: null,
+  },
+];

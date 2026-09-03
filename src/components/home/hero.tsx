@@ -7,9 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Portrait } from "@/components/home/portrait";
 import { profile } from "@/data/profile";
-import { skillCategories } from "@/data/skills";
+import { allSkills } from "@/data/skills";
+import { TECH_LABELS } from "@/data/tech";
 
-const signature = skillCategories[0].items.slice(0, 5);
+/**
+ * A cross-section of the real skills list rather than one category, so the
+ * strip under the hero reads as what the work actually is.
+ */
+const SIGNATURE = [
+  "Python",
+  "FastAPI",
+  "Retrieval-Augmented Generation (RAG)",
+  "FAISS",
+  "LLMs",
+].filter((name) => allSkills.includes(name));
 
 export function Hero({ portraitAvailable }: { portraitAvailable: boolean }) {
   const scope = useRef<HTMLDivElement>(null);
@@ -197,12 +208,12 @@ export function Hero({ portraitAvailable }: { portraitAvailable: boolean }) {
               </div>
 
               <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                {signature.map((item) => (
+                {SIGNATURE.map((item) => (
                   <li
                     key={item}
                     className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-fg-subtle"
                   >
-                    {item}
+                    {TECH_LABELS[item] ?? item}
                   </li>
                 ))}
               </ul>

@@ -23,12 +23,6 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
-    /*
-     * The ground is scrubbed by ScrollStage, but text and borders switch as a
-     * set at the crossover. A short transition on colour keeps that switch from
-     * reading as a snap without ever parking the text at mid-grey.
-     */
-    transition: color 0.22s linear;
   }
 
   h1,
@@ -147,6 +141,24 @@
   .no-color-transition {
     transition: none !important;
   }
+}
+
+
+/*
+ * While the colour journey is in motion, ScrollStage marks the root. Every
+ * element with a colour transition would otherwise restart that transition on
+ * each step of the ground — hundreds of simultaneous transitions, which was
+ * the single largest source of scroll stutter (10.3s of style recalculation
+ * over a six-second scroll). Reveal keeps its transition because that is the
+ * entrance animation itself, and it runs while scrolling by design.
+ *
+ * The suspension lifts 180ms after the ground settles, so hover states animate
+ * normally whenever the visitor is actually reading.
+ */
+html[data-stage-shift] *:not([data-reveal]),
+html[data-stage-shift] *:not([data-reveal])::before,
+html[data-stage-shift] *:not([data-reveal])::after {
+  transition-duration: 0s !important;
 }
 
 html.motion-ready [data-reveal] {

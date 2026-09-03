@@ -5,38 +5,49 @@ export type SkillCategory = {
   items: string[];
 };
 
+/**
+ * Taken verbatim from the resume's Technical Skills section. Nothing is added
+ * that the resume does not claim — this list is what a recruiter will check
+ * against, so it has to match.
+ */
 export const skillCategories: SkillCategory[] = [
   {
-    id: "ml",
-    title: "AI/ML & Data Science",
-    summary: "Training, evaluating, and reasoning about models — and the data they depend on.",
+    id: "languages",
+    title: "Languages",
+    summary: "What the work is written in.",
+    items: ["Python", "C++", "SQL", "JavaScript"],
+  },
+  {
+    id: "frameworks",
+    title: "Frameworks",
+    summary: "The services and interfaces that put a model in front of someone.",
+    items: ["FastAPI", "Flask", "Streamlit"],
+  },
+  {
+    id: "libraries",
+    title: "Libraries",
+    summary: "Analysis, visualisation, and vector search.",
+    items: ["Pandas", "NumPy", "Matplotlib", "Seaborn", "FAISS"],
+  },
+  {
+    id: "technologies",
+    title: "Technologies",
+    summary: "The applied-AI ground: retrieval, embeddings, and the models themselves.",
     items: [
-      "Python",
-      "TensorFlow",
-      "Scikit-learn",
-      "Pandas",
-      "NumPy",
-      "NLP",
-      "Computer Vision",
-      "Hugging Face",
+      "LLMs",
+      "Retrieval-Augmented Generation (RAG)",
+      "Vector Databases",
+      "Prompt Engineering",
+      "Embeddings",
     ],
   },
   {
-    id: "backend",
-    title: "Backend & Services",
-    summary: "The services that put a model behind an interface and keep it reachable.",
-    items: ["Node.js", "Express", "MongoDB", "REST APIs", "GraphQL"],
-  },
-  {
-    id: "frontend",
-    title: "Interfaces",
-    summary: "Front ends that make model output legible instead of raw.",
-    items: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "HTML/CSS"],
-  },
-  {
     id: "tools",
-    title: "Tooling & Platforms",
-    summary: "The everyday environment: version control, containers, notebooks, deployment.",
-    items: ["Git/GitHub", "Docker", "Jupyter", "Vercel", "VS Code", "Cursor", "Canva"],
+    title: "Tools",
+    summary: "The everyday environment.",
+    items: ["VS Code", "PyCharm", "Jupyter Notebook", "Git", "GitHub"],
   },
 ];
+
+/** Flat list, in the order the categories declare them. */
+export const allSkills = skillCategories.flatMap((category) => category.items);

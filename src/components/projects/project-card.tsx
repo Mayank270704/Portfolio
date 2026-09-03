@@ -9,7 +9,7 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { Tag } from "@/components/ui/tag";
 import type { Project } from "@/data/projects";
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({ project, index }: { project: Project; index?: number }) {
   const cardRef = useRef<HTMLElement>(null);
   const finePointer = useMediaQuery("(pointer: fine)");
   const reduced = useReducedMotion();
@@ -70,8 +70,8 @@ export function ProjectCard({ project }: { project: Project }) {
         }}
       />
 
-      <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-well">
-        {project.image ? (
+      {project.image ? (
+        <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-well">
           <Image
             data-media
             src={project.image.src}
@@ -81,27 +81,34 @@ export function ProjectCard({ project }: { project: Project }) {
             className="h-full w-full object-cover will-change-transform"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
-        ) : (
-          <div
-            data-media
-            aria-hidden
-            className="hairline-grid flex h-full w-full items-center justify-center will-change-transform"
-          >
-            <span className="font-display text-2xl font-semibold tracking-tight text-line-strong">
-              {project.title.slice(0, 2).toUpperCase()}
-            </span>
-          </div>
-        )}
-      </div>
-
+        </div>
+      ) : (
+        // No screenshot yet. A slim indexed band rather than a large empty
+        // well: it fills the space deliberately instead of looking like a
+        // picture failed to load.
+        <div
+          data-media
+          aria-hidden
+          className="hairline-grid relative flex h-24 items-end justify-between border-b border-line px-6 pb-4 will-change-transform sm:h-28 sm:px-7"
+        >
+          <span className="font-display text-[2.75rem] font-semibold leading-none tracking-tight text-line-strong sm:text-[3.25rem]">
+            {typeof index === "number" ? String(index + 1).padStart(2, "0") : ""}
+          </span>
+          <span className="pb-1 font-mono text-[0.625rem] uppercase tracking-[0.18em] text-fg-subtle">
+            {project.github ? "Source available" : ""}
+          </span>
+        </div>
+      )}
       <div className="flex flex-1 flex-col gap-5 p-6 sm:p-7">
         <div className="flex items-center justify-between gap-4">
           <span className="font-mono text-[0.625rem] uppercase tracking-[0.18em] text-accent">
-            {project.category}
+            {project.category ?? "Project"}
           </span>
-          <span className="font-mono text-[0.625rem] tracking-[0.12em] text-fg-subtle tabular">
-            {project.date}
-          </span>
+          {project.date ? (
+            <span className="font-mono text-[0.625rem] tracking-[0.12em] text-fg-subtle tabular">
+              {project.date}
+            </span>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-3">
@@ -110,7 +117,13 @@ export function ProjectCard({ project }: { project: Project }) {
               {project.title}
             </Link>
           </h3>
-          <p className="text-sm leading-relaxed text-fg-muted">{project.shortDescription}</p>
+          {project.shortDescription ? (
+            <p className="text-sm leading-relaxed text-fg-muted">{project.shortDescription}</p>
+          ) : (
+            <p className="text-sm leading-relaxed text-fg-subtle">
+              Write-up in progress. The repository is public in the meantime.
+            </p>
+          )}
         </div>
 
         {project.metrics && project.metrics.length > 0 ? (
@@ -128,7 +141,7 @@ export function ProjectCard({ project }: { project: Project }) {
 
         <div className="mt-auto flex items-end justify-between gap-4 pt-2">
           <div className="flex flex-wrap gap-2">
-            {project.stack.slice(0, 4).map((item) => (
+            {(project.stack ?? []).slice(0, 4).map((item) => (
               <Tag key={item}>{item}</Tag>
             ))}
           </div>

@@ -2,10 +2,8 @@ export type EducationEntry = {
   id: string;
   institution: string;
   program: string;
-  /** Branch or concentration, when it is narrower than the programme name. */
   specialisation: string | null;
   location: string | null;
-  /** Free-form so a year alone is valid, e.g. `"2024"` or `"Aug 2024"`. */
   start: string;
   /** `null` while ongoing. */
   end: string | null;
@@ -16,15 +14,16 @@ export type EducationEntry = {
   url: string | null;
 };
 
+/** From the resume's Education section. */
 export const education: EducationEntry[] = [
   {
-    id: "kiet-btech-cse",
+    id: "kiet-btech-cse-ai",
     institution: "KIET Group of Institutions",
     program: "B.Tech, Computer Science and Engineering",
-    specialisation: null,
-    location: null,
-    start: "2024",
-    end: null,
+    specialisation: "Artificial Intelligence",
+    location: "Ghaziabad, Uttar Pradesh",
+    start: "2023",
+    end: "2027",
     status: "in-progress",
     score: null,
     highlights: [],

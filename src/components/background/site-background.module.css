@@ -75,19 +75,24 @@
   opacity: var(--stage-progress, 0);
 }
 
+/*
+ * Translation only. These keyframes used to animate scaleY as well, which
+ * forces the 70px blur to be re-rasterised every frame instead of rasterised
+ * once and then composited. The drift reads the same without it.
+ */
 @keyframes drift-a {
-  0%, 100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
-  50% { transform: translate3d(-46%, -3vh, 0) scaleY(1.08); }
+  0%, 100% { transform: translate3d(-50%, 0, 0); }
+  50% { transform: translate3d(-46%, -3vh, 0); }
 }
 
 @keyframes drift-b {
-  0%, 100% { transform: translate3d(-50%, -2vh, 0) scaleY(1.04); }
-  50% { transform: translate3d(-55%, 1vh, 0) scaleY(0.94); }
+  0%, 100% { transform: translate3d(-50%, -2vh, 0); }
+  50% { transform: translate3d(-55%, 1vh, 0); }
 }
 
 @keyframes drift-c {
-  0%, 100% { transform: translate3d(-50%, 1vh, 0) scaleY(0.96); }
-  50% { transform: translate3d(-44%, -2vh, 0) scaleY(1.06); }
+  0%, 100% { transform: translate3d(-50%, 1vh, 0); }
+  50% { transform: translate3d(-44%, -2vh, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -6,6 +6,7 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Surface } from "@/components/ui/surface";
 import { Tag } from "@/components/ui/tag";
+import { EmptyState } from "@/components/ui/empty-state";
 import { ProjectGallery } from "@/components/projects/project-gallery";
 import { ProjectPager } from "@/components/projects/project-pager";
 import { Reveal } from "@/components/motion/reveal";
@@ -13,6 +14,7 @@ import {
   getProject,
   getProjectLinks,
   getProjectNeighbours,
+  hasCaseStudy,
   projects,
   type ProjectSection,
 } from "@/data/projects";
@@ -36,7 +38,8 @@ export async function generateMetadata({
 
   return pageMetadata({
     title: project.title,
-    description: project.shortDescription,
+    description:
+      project.shortDescription ?? `${project.title} — a project by Mayank Swaroop Nandan.`,
     path: `/projects/${project.slug}`,
   });
 }
@@ -76,11 +79,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const features = project.features ?? [];
   const metrics = project.metrics ?? [];
   const gallery = project.gallery ?? [];
+  const stack = project.stack ?? [];
+  const tags = project.tags ?? [];
+  const documented = hasCaseStudy(project);
 
   return (
     <>
       <PageHeader
-        eyebrow={project.category}
+        eyebrow={project.category ?? "Project"}
         title={project.title}
         lede={project.shortDescription}
         meta={project.date}
@@ -136,20 +142,52 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
             <div className="flex flex-col gap-12">
-              <section data-reveal className="flex flex-col gap-4">
-                <h2 className="text-2xl">Overview</h2>
-                <p className="measure leading-relaxed text-fg-muted">{project.shortDescription}</p>
-              </section>
+              {!documented ? (
+                <div data-reveal>
+                  <EmptyState
+                    eyebrow="Case study"
+                    title="This write-up is still being written"
+                    body="The repository is public and is the most accurate record of the work right now. The full case study — problem, approach, architecture, and result — follows here once it is written."
+                    action={
+                      project.github ? (
+                        <Button href={project.github} external variant="outline" size="sm">
+                          View the repository
+                        </Button>
+                      ) : undefined
+                    }
+                  />
+                </div>
+              ) : null}
 
-              <section data-reveal className="flex flex-col gap-4">
-                <h2 className="text-2xl">Problem</h2>
-                <p className="measure leading-relaxed text-fg-muted">{project.problem}</p>
-              </section>
+              {project.problem ? (
+                <section data-reveal className="flex flex-col gap-4">
+                  <h2 className="text-2xl">Problem</h2>
+                  <p className="measure leading-relaxed text-fg-muted">{project.problem}</p>
+                </section>
+              ) : null}
 
-              <section data-reveal className="flex flex-col gap-4">
-                <h2 className="text-2xl">Approach</h2>
-                <p className="measure leading-relaxed text-fg-muted">{project.approach}</p>
-              </section>
+              {project.approach ? (
+                <section data-reveal className="flex flex-col gap-4">
+                  <h2 className="text-2xl">Approach</h2>
+                  <p className="measure leading-relaxed text-fg-muted">{project.approach}</p>
+                </section>
+              ) : null}
+
+              {features.length > 0 ? (
+                <section data-reveal className="flex flex-col gap-5">
+                  <h2 className="text-2xl">What it does</h2>
+                  <ul className="flex flex-col gap-4">
+                    {features.map((feature, index) => (
+                      <li key={feature} className="flex gap-5">
+                        <span className="mt-1 font-mono text-[0.6875rem] tracking-[0.18em] text-accent tabular">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="measure leading-relaxed text-fg-muted">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
 
               {architecture.length > 0 ? (
                 <div className="flex flex-col gap-12">
@@ -163,23 +201,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </div>
               ) : null}
 
-              {features.length > 0 ? (
-                <section data-reveal className="flex flex-col gap-4">
-                  <h2 className="text-2xl">Features</h2>
-                  <ul className="flex flex-col gap-3">
-                    {features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex gap-3 leading-relaxed text-fg-muted"
-                      >
-                        <span aria-hidden className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ) : null}
-
               {gallery.length > 0 ? (
                 <section data-reveal className="flex flex-col gap-6">
                   <h2 className="text-2xl">Screens and diagrams</h2>
@@ -190,32 +211,49 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
             <div data-reveal className="lg:sticky lg:top-32 lg:self-start">
               <Surface className="flex flex-col gap-7 p-7">
-                <div className="flex flex-col gap-2">
-                  <span className="eyebrow">Role</span>
-                  <p className="text-sm text-fg">{project.role}</p>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <span className="eyebrow">Timeline</span>
-                  <p className="text-sm text-fg">{project.date}</p>
-                </div>
-                {project.stack.length > 0 ? (
+                {project.role ? (
+                  <div className="flex flex-col gap-2">
+                    <span className="eyebrow">Role</span>
+                    <p className="text-sm text-fg">{project.role}</p>
+                  </div>
+                ) : null}
+                {project.date ? (
+                  <div className="flex flex-col gap-2">
+                    <span className="eyebrow">Timeline</span>
+                    <p className="text-sm text-fg">{project.date}</p>
+                  </div>
+                ) : null}
+                {stack.length > 0 ? (
                   <div className="flex flex-col gap-3">
                     <span className="eyebrow">Stack</span>
                     <div className="flex flex-wrap gap-2">
-                      {project.stack.map((item) => (
+                      {stack.map((item) => (
                         <Tag key={item}>{item}</Tag>
                       ))}
                     </div>
                   </div>
                 ) : null}
-                {project.tags.length > 0 ? (
+                {tags.length > 0 ? (
                   <div className="flex flex-col gap-3">
                     <span className="eyebrow">Tags</span>
                     <div className="flex flex-wrap gap-2">
-                      {project.tags.map((item) => (
+                      {tags.map((item) => (
                         <Tag key={item}>{item}</Tag>
                       ))}
                     </div>
+                  </div>
+                ) : null}
+                {project.github ? (
+                  <div className="flex flex-col gap-2 border-t border-line pt-6">
+                    <span className="eyebrow">Source</span>
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="break-all text-sm text-accent transition-colors hover:text-accent-bright"
+                    >
+                      {project.github.replace("https://", "")}
+                    </a>
                   </div>
                 ) : null}
               </Surface>

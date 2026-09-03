@@ -42,13 +42,14 @@ export function Reveal({
       done = true;
       show();
       observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
     };
 
-    const onScroll = () => {
-      if (root.getBoundingClientRect().top < window.innerHeight * 0.92) finish();
-    };
-
+    // IntersectionObserver alone. There used to be a scroll listener alongside
+    // this as a belt-and-braces fallback, but every Reveal on the page added
+    // one, and each called getBoundingClientRect on every scroll event — a
+    // forced layout per instance per frame. The observer's first callback
+    // already reports elements that start above the fold, which is the only
+    // case the fallback covered.
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting || entry.boundingClientRect.top < 0)) {
@@ -59,12 +60,8 @@ export function Reveal({
     );
 
     observer.observe(root);
-    window.addEventListener("scroll", onScroll, { passive: true });
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => observer.disconnect();
   }, [delay, stagger, threshold]);
 
   return (

@@ -1,3 +1,4 @@
+import { achievements } from "@/data/achievements";
 import { education } from "@/data/education";
 import { experience } from "@/data/experience";
 import { profile } from "@/data/profile";
@@ -5,24 +6,18 @@ import { skillCategories } from "@/data/skills";
 import { formatPeriod, joinMeta } from "@/lib/format";
 
 export type ResumeFile = {
-  /**
-   * Flip to `true` only once the PDF actually exists at `url`. While this is
-   * `false` the page renders an unavailable state and emits no link at all.
-   */
+  /** Only `true` once the PDF actually exists at `url`. */
   available: boolean;
-  /** Path under `public/`. */
   url: string | null;
-  /** Filename offered to the browser on download. */
   fileName: string;
   /** Free-form, e.g. `"March 2026"`. Shown beside the download. */
   updated: string | null;
-  /** e.g. `"180 KB"`. Optional courtesy for the visitor. */
   sizeLabel: string | null;
 };
 
 export const resumeFile: ResumeFile = {
-  available: false,
-  url: null,
+  available: true,
+  url: "/resume.pdf",
   fileName: "mayank-swaroop-nandan-resume.pdf",
   updated: null,
   sizeLabel: null,
@@ -35,7 +30,7 @@ export type ResumeSection = {
 
 /**
  * The on-page resume is derived from the same data as the rest of the site, so
- * there is exactly one source for education, experience, and skills.
+ * there is exactly one source for education, experience, skills and awards.
  */
 export function getResumeOutline(): ResumeSection[] {
   const sections: ResumeSection[] = [];
@@ -45,7 +40,7 @@ export function getResumeOutline(): ResumeSection[] {
       title: "Education",
       items: education.map((entry) =>
         joinMeta([
-          entry.program,
+          entry.specialisation ? `${entry.program} (${entry.specialisation})` : entry.program,
           entry.institution,
           formatPeriod(entry.start, entry.end),
           entry.score,
@@ -63,11 +58,6 @@ export function getResumeOutline(): ResumeSection[] {
     });
   }
 
-  sections.push({
-    title: "Focus areas",
-    items: profile.focusAreas.map((area) => area.label),
-  });
-
   sections.push(
     ...skillCategories.map((category) => ({
       title: category.title,
@@ -75,16 +65,20 @@ export function getResumeOutline(): ResumeSection[] {
     })),
   );
 
-  sections.push({
-    title: "Seeking",
-    items: profile.goals,
-  });
+  if (achievements.length > 0) {
+    sections.push({
+      title: "Achievements",
+      items: achievements.map((entry) => joinMeta([entry.title, entry.organisation])),
+    });
+  }
+
+  sections.push({ title: "Seeking", items: profile.goals });
 
   return sections;
 }
 
 export const resume = {
   summary:
-    "The same material as the PDF, readable without a download: education, experience, focus areas, and the technical ground I work on.",
+    "The same material as the PDF, readable without a download: education, focus areas, the technical ground I work on, and what I am looking for.",
   file: resumeFile,
 };

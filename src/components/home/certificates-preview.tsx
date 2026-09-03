@@ -7,7 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { certificates } from "@/data/certificates";
 
 /** The homepage shows at most this many credentials. */
-export const CERTIFICATE_PREVIEW_LIMIT = 3;
+export const CERTIFICATE_PREVIEW_LIMIT = 4;
 
 /**
  * Credential preview. Handles a certificate with no image and one with no
@@ -42,7 +42,7 @@ export function CertificatesPreview() {
             />
           </div>
         ) : (
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {preview.map((certificate) => (
               <li key={certificate.id} data-reveal className="h-full">
                 <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-[transform,border-color] duration-500 ease-out hover:-translate-y-1.5 hover:border-line-strong">
@@ -64,22 +64,24 @@ export function CertificatesPreview() {
                       <span className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-accent">
                         {certificate.issuer}
                       </span>
-                      <span className="font-mono text-[0.625rem] tracking-[0.12em] text-fg-subtle tabular">
-                        {certificate.issued}
-                      </span>
+                      {certificate.issued ? (
+                        <span className="font-mono text-[0.625rem] tracking-[0.12em] text-fg-subtle tabular">
+                          {certificate.issued}
+                        </span>
+                      ) : null}
                     </div>
 
                     <h3 className="text-lg leading-snug">{certificate.title}</h3>
 
                     <div className="mt-auto pt-2">
-                      {certificate.credentialUrl ? (
+                      {certificate.documentUrl ? (
                         <a
-                          href={certificate.credentialUrl}
+                          href={certificate.documentUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="font-mono text-[0.6875rem] text-accent transition-colors hover:text-accent-bright"
                         >
-                          Verify &rarr;
+                          View certificate &rarr;
                           <span className="sr-only"> {certificate.title}</span>
                         </a>
                       ) : (

@@ -1,20 +1,22 @@
 import type { ImageAsset } from "@/data/types";
 
-export type ContactChannelId = "email" | "github" | "linkedin" | "x" | "website";
+export type ContactChannelId = "email" | "github" | "linkedin" | "leetcode" | "phone";
 
 export type ContactChannel = {
   id: ContactChannelId;
   label: string;
-  /** What the visitor reads, e.g. `github.com/username`. */
+  /** What the visitor reads, e.g. `github.com/Mayank270704`. */
   value: string | null;
   /** Where it goes. `null` until the destination is confirmed. */
   href: string | null;
-  /**
-   * Only a channel confirmed by Mayank is rendered as a live link. An
-   * unconfirmed URL is worse than no URL — it sends a recruiter to a 404.
-   */
+  /** Only a confirmed channel is rendered as a live link. */
   verified: boolean;
   primary?: boolean;
+};
+
+export type FocusArea = {
+  label: string;
+  detail: string;
 };
 
 /**
@@ -24,33 +26,28 @@ export type ContactChannel = {
  */
 export const PORTRAIT_ASSET = "/images/profile-cutout.png";
 
-export type FocusArea = {
-  label: string;
-  detail: string;
-};
-
 export const contactChannels: ContactChannel[] = [
   {
     id: "email",
     label: "Email",
-    value: null,
-    href: null,
-    verified: false,
+    value: "mayanknandan27@gmail.com",
+    href: "mailto:mayanknandan27@gmail.com",
+    verified: true,
     primary: true,
   },
   {
     id: "github",
     label: "GitHub",
-    value: "github.com/mayank-swaroop-nandan",
-    href: "https://github.com/mayank-swaroop-nandan",
-    verified: false,
+    value: "github.com/Mayank270704",
+    href: "https://github.com/Mayank270704",
+    verified: true,
   },
   {
     id: "linkedin",
     label: "LinkedIn",
     value: "linkedin.com/in/mayank-swaroop-nandan",
-    href: "https://www.linkedin.com/in/mayank-swaroop-nandan",
-    verified: false,
+    href: "https://www.linkedin.com/in/mayank-swaroop-nandan-a096aa327/",
+    verified: true,
   },
 ];
 
@@ -60,17 +57,16 @@ export const profile = {
   initials: "MN",
   role: "AI/ML Engineer",
   roleLong: "AI/ML Engineer & Data Analytics",
-  /** Set once a city is confirmed; the UI hides the field while it is null. */
-  location: null as string | null,
-  /** Professional photograph. Add the file to `public/images/` first. */
+  location: "Gorakhpur, Uttar Pradesh" as string | null,
+  /** Real transparent cutout. Rendered only when the file is present. */
   photo: null as ImageAsset | null,
   positioning: "I build machine learning systems and the data pipelines that make them work.",
   introduction:
-    "I am an undergraduate engineer at KIET Group of Institutions focused on machine learning, AI engineering, and data analytics. I work across the full path a model takes to production: preparing data, training and evaluating models, and building the interfaces that make their output usable.",
+    "I am an undergraduate engineer at KIET Group of Institutions, studying Computer Science and Engineering with a specialisation in AI. I work across the full path a model takes to production: preparing data, building retrieval and inference pipelines, and shipping the interfaces that make their output usable.",
   focusAreas: [
-    { label: "Machine learning", detail: "Model training, evaluation, and iteration" },
-    { label: "AI engineering", detail: "Turning models into systems people can use" },
-    { label: "Data analytics", detail: "Making measurement drive the decision" },
+    { label: "Applied LLMs", detail: "Retrieval-augmented generation, embeddings, and agent workflows" },
+    { label: "Backend for AI", detail: "FastAPI services that put a model behind an interface" },
+    { label: "Data analytics", detail: "Turning raw data into something a decision can rest on" },
   ] satisfies FocusArea[],
   availability: "Open to internships, placement opportunities, and AI-driven product roles.",
   goals: ["Internship", "Placement opportunities", "AI-driven product roles"],

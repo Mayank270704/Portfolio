@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { TechWallGrid } from "@/components/home/tech-wall-grid";
 import { Reveal } from "@/components/motion/reveal";
-import { skillCategories } from "@/data/skills";
-import { TECH_ICON_SLUGS, TECH_WALL_ORDER } from "@/data/tech";
+import { allSkills, skillCategories } from "@/data/skills";
+import { TECH_ICON_SLUGS, TECH_LABELS } from "@/data/tech";
 
 export type TechTile = {
+  /** Stable identity, even when the same tile appears in more than one row. */
   name: string;
+  label: string;
   /** SVG path data for the brand mark, or null for a typographic tile. */
   path: string | null;
   hex: string | null;
@@ -26,18 +28,13 @@ function iconFor(name: string): { path: string | null; hex: string | null } {
   return icon ? { path: icon.path, hex: `#${icon.hex}` } : { path: null, hex: null };
 }
 
-/**
- * Every technology already named in the skills data, curated order first.
- * Nothing is introduced here that is not already in `skillCategories`.
- */
+/** Every technology already named in the skills data. Nothing is added here. */
 function buildTiles(): TechTile[] {
-  const all = skillCategories.flatMap((category) => category.items);
-  const ordered = [
-    ...TECH_WALL_ORDER.filter((name) => all.includes(name)),
-    ...all.filter((name) => !TECH_WALL_ORDER.includes(name)),
-  ];
-
-  return ordered.map((name) => ({ name, ...iconFor(name) }));
+  return allSkills.map((name) => ({
+    name,
+    label: TECH_LABELS[name] ?? name,
+    ...iconFor(name),
+  }));
 }
 
 /**
@@ -69,16 +66,18 @@ export function TechWall() {
 
       <TechWallGrid tiles={tiles} />
 
-      <div className="shell mt-12 flex flex-wrap gap-x-8 gap-y-3">
-        {skillCategories.map((category) => (
-          <span
-            key={category.id}
-            className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-fg-subtle"
-          >
-            {category.title}
-          </span>
-        ))}
-      </div>
+      <Reveal className="shell mt-12">
+        <ul data-reveal className="flex flex-wrap gap-x-8 gap-y-3">
+          {skillCategories.map((category) => (
+            <li
+              key={category.id}
+              className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-fg-subtle"
+            >
+              {category.title}
+            </li>
+          ))}
+        </ul>
+      </Reveal>
     </Section>
   );
 }
