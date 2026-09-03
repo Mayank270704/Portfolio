@@ -1,22 +1,42 @@
 @theme {
-  --color-void: #05070b;
-  --color-base: #080b11;
-  --color-surface: #0d1219;
-  --color-raised: #131a23;
-  --color-line: #1e2733;
-  --color-line-strong: #2b3644;
+  /*
+   * `void` is the ground. Its value here is the top of the page — bright,
+   * warm white — and ScrollStage overwrites it on the root element as the
+   * visitor scrolls, all the way to near-black. Every other colour is either
+   * an alpha over the ground or a member of a stage palette, so the whole
+   * environment moves with it instead of one background changing underneath
+   * fixed colours.
+   */
+  --color-void: #fcfbf8;
 
-  --color-fg: #e9eef5;
-  --color-fg-muted: #97a3b4;
-  --color-fg-subtle: #6d798a;
+  /* Alpha-over-ground, so surfaces stay correct at every point of the journey. */
+  /*
+   * Image/media well. Named "well" rather than "base" on purpose: Tailwind
+   * resolves text-* against both --text-* and --color-*, so a --color-base
+   * token silently turns the text-base font-size utility into a colour.
+   */
+  --color-well: rgb(18 21 27 / 0.05);
+  --color-surface: rgb(18 21 27 / 0.035);
+  --color-raised: rgb(18 21 27 / 0.07);
+  --color-line: rgb(18 21 27 / 0.12);
+  --color-line-strong: rgb(18 21 27 / 0.24);
 
-  --color-accent: #7c9cff;
-  --color-accent-bright: #a5b9ff;
-  --color-accent-deep: #4a67d6;
+  --color-fg: #14171c;
+  --color-fg-muted: #4d545e;
+  --color-fg-subtle: #7a818b;
 
-  --color-signal-positive: #46c79a;
-  --color-signal-caution: #d9a441;
-  --color-signal-critical: #e0645a;
+  --color-accent: #2c46cf;
+  --color-accent-bright: #1b32ad;
+  --color-accent-deep: #14227e;
+  /*
+   * Label colour on an accent fill. Kept separate from the ground: the ground
+   * travels through mid-grey, and mid-grey on an accent chip is unreadable.
+   */
+  --color-on-accent: #ffffff;
+
+  --color-signal-positive: #1c7f5f;
+  --color-signal-caution: #8a6410;
+  --color-signal-critical: #b03d33;
 
   --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
@@ -35,7 +55,52 @@
 :root {
   --shell-max: 76rem;
   --header-h: 4.25rem;
-  --grid-line: rgba(255, 255, 255, 0.028);
-  --glow-accent: 124 156 255;
+  --grid-line: rgb(18 21 27 / 0.05);
+  --glow-accent: 44 70 207;
   --scroll-progress: 0;
+  /* Written by ScrollStage; 0 at the top of the document, 1 at the bottom. */
+  --stage-progress: 0;
+  --shadow-accent: 0 0 0 1px rgb(44 70 207 / 0.24), 0 18px 40px -20px rgb(44 70 207 / 0.6);
+  --portrait-halo: radial-gradient(
+    58% 52% at 52% 40%,
+    rgb(44 70 207 / 0.16),
+    rgb(44 70 207 / 0) 68%
+  );
+  color-scheme: light;
+}
+
+/*
+ * The dark half of the journey. ScrollStage sets data-stage="dark" at the
+ * crossover, swapping the whole palette at once so text, borders and surfaces
+ * are never mid-transition against a mid-grey ground.
+ */
+:root[data-stage="dark"] {
+  --grid-line: rgb(255 255 255 / 0.032);
+  --glow-accent: 143 168 255;
+  --shadow-accent: 0 0 0 1px rgb(143 168 255 / 0.32), 0 18px 40px -18px rgb(143 168 255 / 0.7);
+  --portrait-halo: radial-gradient(
+    58% 52% at 52% 40%,
+    rgb(143 168 255 / 0.2),
+    rgb(143 168 255 / 0) 68%
+  );
+  color-scheme: dark;
+
+  --color-well: rgb(255 255 255 / 0.04);
+  --color-surface: rgb(255 255 255 / 0.045);
+  --color-raised: rgb(255 255 255 / 0.08);
+  --color-line: rgb(255 255 255 / 0.12);
+  --color-line-strong: rgb(255 255 255 / 0.26);
+
+  --color-fg: #f4f6fa;
+  --color-fg-muted: #a5aeba;
+  --color-fg-subtle: #79828f;
+
+  --color-accent: #8fa8ff;
+  --color-accent-bright: #b6c6ff;
+  --color-accent-deep: #5b78e0;
+  --color-on-accent: #080a0e;
+
+  --color-signal-positive: #46c79a;
+  --color-signal-caution: #d9a441;
+  --color-signal-critical: #e0645a;
 }

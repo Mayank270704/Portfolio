@@ -59,7 +59,7 @@ export function ProjectCard({ project }: { project: Project }) {
       onMouseMove={track}
       onMouseEnter={enter}
       onMouseLeave={leave}
-      className="group relative isolate flex flex-col overflow-hidden rounded-2xl border border-line bg-surface/60 backdrop-blur-xl transition-colors duration-500 hover:border-line-strong"
+      className="group relative isolate flex flex-col overflow-hidden rounded-2xl border border-line bg-surface backdrop-blur-xl transition-colors duration-500 hover:border-line-strong"
     >
       <span
         aria-hidden
@@ -70,7 +70,7 @@ export function ProjectCard({ project }: { project: Project }) {
         }}
       />
 
-      <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-base">
+      <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-well">
         {project.image ? (
           <Image
             data-media
@@ -82,9 +82,13 @@ export function ProjectCard({ project }: { project: Project }) {
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         ) : (
-          <div data-media className="hairline-grid flex h-full w-full items-center justify-center">
-            <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-fg-subtle">
-              Image pending
+          <div
+            data-media
+            aria-hidden
+            className="hairline-grid flex h-full w-full items-center justify-center will-change-transform"
+          >
+            <span className="font-display text-2xl font-semibold tracking-tight text-line-strong">
+              {project.title.slice(0, 2).toUpperCase()}
             </span>
           </div>
         )}
@@ -106,10 +110,10 @@ export function ProjectCard({ project }: { project: Project }) {
               {project.title}
             </Link>
           </h3>
-          <p className="text-sm leading-relaxed text-fg-muted">{project.summary}</p>
+          <p className="text-sm leading-relaxed text-fg-muted">{project.shortDescription}</p>
         </div>
 
-        {project.metrics.length > 0 ? (
+        {project.metrics && project.metrics.length > 0 ? (
           <dl className="grid grid-cols-2 gap-4 border-t border-line pt-5 sm:grid-cols-3">
             {project.metrics.slice(0, 3).map((metric) => (
               <div key={metric.label} className="flex flex-col gap-1">

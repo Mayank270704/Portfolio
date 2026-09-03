@@ -1,24 +1,20 @@
 import { ProjectCard } from "@/components/projects/project-card";
-import { PendingNotice } from "@/components/ui/pending-notice";
+import { EmptyState } from "@/components/ui/empty-state";
 import type { Project } from "@/data/projects";
 
-const REQUIREMENTS = [
-  "Project name, one-line summary, and your role",
-  "The problem it solves and the approach you took",
-  "Stack, architecture notes, and any measured results",
-  "Repository URL and live demo URL, if the demo is public",
-  "A screenshot or diagram for the card and case study",
-];
+interface ProjectGridProps {
+  projects: Project[];
+  emptyTitle?: string;
+  emptyBody?: string;
+}
 
-export function ProjectGrid({ projects }: { projects: Project[] }) {
+export function ProjectGrid({
+  projects,
+  emptyTitle = "Case studies are being written up",
+  emptyBody = "Each one is documented the same way — the problem, the approach, the architecture, and what the numbers said. They go live as they are finished rather than as summaries.",
+}: ProjectGridProps) {
   if (projects.length === 0) {
-    return (
-      <PendingNotice
-        title="Case studies are not published yet"
-        body="The project architecture, routing, and case-study template are built and waiting. Nothing is shown here until it describes real work — placeholder projects would cost more credibility than an empty section."
-        requires={REQUIREMENTS}
-      />
-    );
+    return <EmptyState eyebrow="Selected work" title={emptyTitle} body={emptyBody} />;
   }
 
   return (

@@ -4,11 +4,14 @@ import { Section } from "@/components/layout/section";
 import { ProjectGrid } from "@/components/projects/project-grid";
 import { Reveal } from "@/components/motion/reveal";
 import { projects } from "@/data/projects";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Projects",
-  description: "Machine learning and data engineering case studies.",
-};
+  description:
+    "Machine learning and data engineering case studies: the problem, the approach, the architecture, and the measured result.",
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
   return (
@@ -17,7 +20,7 @@ export default function ProjectsPage() {
         eyebrow="Projects"
         title="Case studies, structured for engineers who read them properly."
         lede="Problem, approach, architecture, and measured result — in that order, with the repository and demo attached."
-        meta={projects.length > 0 ? `${projects.length} published` : "00"}
+        meta={projects.length > 0 ? `${projects.length} published` : undefined}
       />
 
       <Section flush>

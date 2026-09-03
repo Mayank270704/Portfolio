@@ -1,21 +1,22 @@
 import type { MetadataRoute } from "next";
-import { navigation } from "@/data/navigation";
+import { staticRoutes } from "@/data/navigation";
 import { projects } from "@/data/projects";
-import { siteUrl } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   return [
-    { url: siteUrl, lastModified: now, priority: 1 },
-    ...navigation.map((item) => ({
-      url: `${siteUrl}${item.href}`,
+    ...staticRoutes.map((item) => ({
+      url: absoluteUrl(item.href),
       lastModified: now,
-      priority: 0.8,
+      changeFrequency: "monthly" as const,
+      priority: item.href === "/" ? 1 : 0.8,
     })),
     ...projects.map((project) => ({
-      url: `${siteUrl}/projects/${project.slug}`,
+      url: absoluteUrl(`/projects/${project.slug}`),
       lastModified: now,
+      changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
   ];

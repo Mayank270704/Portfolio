@@ -9,8 +9,8 @@ interface SurfaceProps {
 }
 
 const toneClasses = {
-  flat: "bg-surface/70 border-line",
-  raised: "bg-raised/80 border-line-strong",
+  flat: "bg-surface border-line",
+  raised: "bg-raised border-line-strong",
   outline: "bg-transparent border-line",
 } as const;
 

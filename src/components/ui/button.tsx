@@ -17,9 +17,8 @@ type ButtonProps =
   | (BaseProps & { href?: undefined; external?: never } & React.ButtonHTMLAttributes<HTMLButtonElement>);
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    "bg-accent text-void hover:bg-accent-bright shadow-[0_0_0_1px_rgba(124,156,255,0.35),0_18px_40px_-18px_rgba(124,156,255,0.9)]",
-  outline: "border border-line-strong bg-surface/60 text-fg hover:border-accent/60 hover:bg-raised",
+  primary: "bg-accent text-on-accent hover:bg-accent-bright shadow-[var(--shadow-accent)]",
+  outline: "border border-line-strong bg-surface text-fg hover:border-accent/60 hover:bg-raised",
   quiet: "text-fg-muted hover:text-fg",
 };
 

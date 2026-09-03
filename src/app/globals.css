@@ -9,7 +9,6 @@
   }
 
   html {
-    color-scheme: dark;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -24,6 +23,12 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
+    /*
+     * The ground is scrubbed by ScrollStage, but text and borders switch as a
+     * set at the crossover. A short transition on colour keeps that switch from
+     * reading as a snap without ever parking the text at mid-grey.
+     */
+    transition: color 0.22s linear;
   }
 
   h1,
@@ -63,8 +68,8 @@
   }
 
   ::selection {
-    background: rgb(var(--glow-accent) / 0.3);
-    color: #fff;
+    background: rgb(var(--glow-accent) / 0.28);
+    color: var(--color-fg);
   }
 
   ::-webkit-scrollbar {
@@ -73,7 +78,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-void);
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -115,6 +120,14 @@
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 72px 72px;
   }
+
+  /* Editorial display type for the hero and section statements. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.032em;
+    line-height: 0.98;
+  }
 }
 
 @layer utilities {
@@ -128,6 +141,11 @@
 
   .measure {
     max-width: 62ch;
+  }
+
+  /* Opt an element out of the global colour transition (large scrubbed art). */
+  .no-color-transition {
+    transition: none !important;
   }
 }
 
@@ -144,6 +162,43 @@ html.motion-ready [data-reveal][data-reveal-visible] {
   opacity: 1;
   transform: none;
   will-change: auto;
+}
+
+/*
+ * Entrance start states.
+ *
+ * These live in CSS so the very first paint is already the from-state of the
+ * GSAP entrance. Without them the browser paints the finished layout, GSAP
+ * snaps it back on mount, and the result reads as a flash. The rules are gated
+ * on html.motion-ready, which is only set when motion is allowed, so a
+ * reduced-motion visitor always gets the finished layout immediately.
+ */
+/*
+ * Percentage translate, matched by { yPercent: 110, y: 0 } in the hero
+ * timeline. If you change the unit here, change it there too — GSAP reads a
+ * computed matrix back as pixels and will otherwise leave a stray y offset.
+ */
+html.motion-ready [data-hero-line] > span {
+  transform: translate3d(0, 110%, 0);
+}
+
+html.motion-ready [data-hero-meta],
+html.motion-ready [data-hero-cta] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+}
+
+html.motion-ready [data-hero-portrait] {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0) scale(1.04);
+}
+
+html.motion-ready [data-hero-halo] {
+  opacity: 0;
+}
+
+html.motion-ready [data-hero-scroll] {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

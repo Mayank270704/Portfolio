@@ -4,12 +4,14 @@ import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { Tag } from "@/components/ui/tag";
 import { skillCategories } from "@/data/skills";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Skills",
   description:
     "Technical ground: AI/ML and data science, backend services, interfaces, and the tooling around them.",
-};
+  path: "/skills",
+});
 
 export default function SkillsPage() {
   return (
